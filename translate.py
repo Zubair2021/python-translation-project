@@ -2,6 +2,11 @@
 
 import sys
 
+
+genetic_code = {'GUC': 'V', 'ACC': 'T', 'GUA': 'V', 'GUG': 'V', 'ACU': 'T'>
+rna_sequence = "CCUGAAUGACGUACGUAUGACUGCAGUACGUUACGUACG"
+
+
 def translate_sequence(rna_sequence, genetic_code):
     """Translates a sequence of RNA into a sequence of amino acids.
 
@@ -41,9 +46,16 @@ def translate_sequence(rna_sequence, genetic_code):
             break
         AA_seq.append(AA)
     return ''.join(AA_seq)
-    print(AA_seq)
+
+#genetic_code = {'GUC': 'V', 'ACC': 'T', 'GUA': 'V', 'GUG': 'V', 'ACU': 'T'>
+#rna_sequence = "CCUGAAUGACGUACGUAUGACUGCAGUACGUUACGUACG"
+
+#genetic_code = {'GUC': 'V', 'ACC': 'T', 'GUA': 'V', 'GUG': 'V', 'ACU': 'T'>
+print(translate_sequence(rna_sequence, genetic_code))
+
 
 def get_all_translations(rna_sequence, genetic_code):
+
     """Get a list of all amino acid sequences encoded by an RNA sequence.
 
     All three reading frames of `rna_sequence` are scanned from 'left' to
@@ -85,7 +97,12 @@ def get_all_translations(rna_sequence, genetic_code):
             polypeptide_list.append(polypeptide)
     return polypeptide_list
 
+#genetic_code = {'GUC': 'V', 'ACC': 'T', 'GUA': 'V', 'GUG': 'V', 'ACU': 'T'>
+#print(get_all_translations('AUGACGUACGUAUGACUGCAGUACGUUACGUACG', genetic_code)
+
+
 def get_reverse(sequence):
+
     """Reverse orientation of `sequence`.
 
     Returns a string with `sequence` in the reverse order.
@@ -101,6 +118,9 @@ def get_reverse(sequence):
     rna_list.reverse()
     rev_str = ''.join([str(item) for item in rna_list])
     return rev_str
+
+print(get_reverse('AUGC'))
+
 
 def get_complement(sequence):
     """Get the complement of a `sequence` of nucleotides.
@@ -120,6 +140,8 @@ def get_complement(sequence):
     for i in rna:
         compl.append(complement[i])
     return ''.join(compl)
+print(get_complement('AUGC'))
+
 
 def reverse_and_complement(sequence):
     """Get the reversed and complemented form of a `sequence` of nucleotides.
@@ -141,6 +163,9 @@ def reverse_and_complement(sequence):
     for i in rna_list:
         rev_c.append(complement[i])
     return ''.join(rev_c)
+
+print(reverse_and_complement('AUGC'))
+
 
 def get_longest_peptide(rna_sequence, genetic_code):
     """Get the longest peptide encoded by an RNA sequence.
@@ -209,7 +234,8 @@ def get_longest_peptide(rna_sequence, genetic_code):
     # using len() + key argument + max()
     len_longest_peptide = len(max(polypeptide_list, key = len))
     print("Length of longest peptide is : " + str(len_longest_peptide))
-    
+
+get_longest_peptide(rna_sequence, genetic_code)
 
 
 if __name__ == '__main__':
