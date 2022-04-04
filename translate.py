@@ -28,7 +28,20 @@ def translate_sequence(rna_sequence, genetic_code):
     str
         A string of the translated amino acids.
     """
-    pass
+    AA_seq = []
+    Bases = list(rna_sequence)
+    while True:
+        if len(Bases) > 2:
+            codon = ''.join(Bases[0:3])
+            del Bases[0:3]
+        else:
+            break
+        AA = genetic_code[codon.upper()]
+        if AA == '*':
+            break
+        AA_seq.append(AA)
+    return ''.join(AA_seq)
+    print(AA_seq)
 
 def get_all_translations(rna_sequence, genetic_code):
     """Get a list of all amino acid sequences encoded by an RNA sequence.
@@ -61,7 +74,16 @@ def get_all_translations(rna_sequence, genetic_code):
         A list of strings; each string is an sequence of amino acids encoded by
         `rna_sequence`.
     """
-    pass
+    num_bases = len(rna_sequence)
+    last_first_base_index = num_bases - 3
+    polypeptide_list = []
+    for i in range(last_first_base_index + 1):
+        i_end = i + 3
+        next_three = rna_sequence[i:i_end]
+        if next_three == 'AUG':
+            polypeptide = translate_sequence(rna_sequence[i:], genetic_code)
+            polypeptide_list.append(polypeptide)
+    return polypeptide_list
 
 def get_reverse(sequence):
     """Reverse orientation of `sequence`.
@@ -75,7 +97,8 @@ def get_reverse(sequence):
     >>> get_reverse('AUGC')
     'CGUA'
     """
-    pass
+    rna_list = list(sequence)
+    rna_list.reverse()
 
 def get_complement(sequence):
     """Get the complement of a `sequence` of nucleotides.
@@ -89,7 +112,12 @@ def get_complement(sequence):
     >>> get_complement('AUGC')
     'UACG'
     """
-    pass
+    rna = list(sequence)
+    compl = []
+    complement = {'A' : 'U', 'C' : 'G', 'G': 'C', 'U': 'A'}
+    for i in rna:
+        compl.append(complement[i])
+    return ''.join(compl)
 
 def reverse_and_complement(sequence):
     """Get the reversed and complemented form of a `sequence` of nucleotides.
@@ -104,7 +132,13 @@ def reverse_and_complement(sequence):
     >>> reverse_and_complement('AUGC')
     'GCAU'
     """
-    pass
+    rna_list = list(sequence)
+    rna_list.reverse()
+    rev_c = []
+    complement = {'A' : 'U', 'C' : 'G', 'G': 'C', 'U': 'A'}
+    for i in rna_list:
+        rev_c.append(complement[i])
+    return ''.join(rev_c)
 
 def get_longest_peptide(rna_sequence, genetic_code):
     """Get the longest peptide encoded by an RNA sequence.
@@ -133,12 +167,51 @@ def get_longest_peptide(rna_sequence, genetic_code):
         A string of the longest sequence of amino acids encoded by
         `rna_sequence`.
     """
-    pass
+    num_bases = len(rna_sequence)
+    last_first_base_index = num_bases - 3
+    polypeptide_list = []
+    for i in range(last_first_base_index + 1):
+        i_end = i + 3
+        next_three = rna_sequence[i:i_end]
+        if next_three == 'AUG':
+            polypeptide = translate_sequence(rna_sequence[i:], genetic_code)
+            polypeptide_list.append(polypeptide)
+    return polypeptide_list
+
+    rna_list = list(rna_sequence)
+    rna_list.reverse()
+    rev_c = []
+    complement = {'A' : 'U', 'C' : 'G', 'G': 'C', 'U': 'A'}
+    for i in rna_list:
+        rev_c.append(complement[i])
+    return ''.join(rev_c)
+
+
+
+    Combined_list = polypeptide_list + rev_c
+
+    # Longest String in list
+    # using loop
+    max_len = -1
+    for ele in Combined_list:
+        if len(ele) > max_len:
+           max_len = len(ele)
+           longest_peptide = ele
+
+    # printing result
+    print("The longest_peptide is : " + longest_peptide)
+
+
+    # Extracting length of longest string in list
+    # using len() + key argument + max()
+    len_longest_peptide = len(max(polypeptide_list, key = len))
+    print("Length of longest peptide is : " + str(len_longest_peptide))
+    
 
 
 if __name__ == '__main__':
     genetic_code = {'GUC': 'V', 'ACC': 'T', 'GUA': 'V', 'GUG': 'V', 'ACU': 'T', 'AAC': 'N', 'CCU': 'P', 'UGG': 'W', 'AGC': 'S', 'AUC': 'I', 'CAU': 'H', 'AAU': 'N', 'AGU': 'S', 'GUU': 'V', 'CAC': 'H', 'ACG': 'T', 'CCG': 'P', 'CCA': 'P', 'ACA': 'T', 'CCC': 'P', 'UGU': 'C', 'GGU': 'G', 'UCU': 'S', 'GCG': 'A', 'UGC': 'C', 'CAG': 'Q', 'GAU': 'D', 'UAU': 'Y', 'CGG': 'R', 'UCG': 'S', 'AGG': 'R', 'GGG': 'G', 'UCC': 'S', 'UCA': 'S', 'UAA': '*', 'GGA': 'G', 'UAC': 'Y', 'GAC': 'D', 'UAG': '*', 'AUA': 'I', 'GCA': 'A', 'CUU': 'L', 'GGC': 'G', 'AUG': 'M', 'CUG': 'L', 'GAG': 'E', 'CUC': 'L', 'AGA': 'R', 'CUA': 'L', 'GCC': 'A', 'AAA': 'K', 'AAG': 'K', 'CAA': 'Q', 'UUU': 'F', 'CGU': 'R', 'CGC': 'R', 'CGA': 'R', 'GCU': 'A', 'GAA': 'E', 'AUU': 'I', 'UUG': 'L', 'UUA': 'L', 'UGA': '*', 'UUC': 'F'}
-    rna_seq = ("AUG"
+    rna_sequence = ("AUG"
             "UAC"
             "UGG"
             "CAC"
@@ -155,11 +228,11 @@ if __name__ == '__main__':
             "AGU"
             "ACA"
             "GCG")
-    longest_peptide = get_longest_peptide(rna_sequence = rna_seq,
+    longest_peptide = get_longest_peptide(rna_sequence = rna_sequence,
             genetic_code = genetic_code)
     assert isinstance(longest_peptide, str), "Oops: the longest peptide is {0}, not a string".format(longest_peptide)
     message = "The longest peptide encoded by\n\t'{0}'\nis\n\t'{1}'\n".format(
-            rna_seq,
+            rna_sequence,
             longest_peptide)
     sys.stdout.write(message)
     if longest_peptide == "MYWHATAPYTHQNISTA":
