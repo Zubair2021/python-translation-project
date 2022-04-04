@@ -99,6 +99,8 @@ def get_reverse(sequence):
     """
     rna_list = list(sequence)
     rna_list.reverse()
+    rev_str = ''.join([str(item) for item in rna_list])
+    return rev_str
 
 def get_complement(sequence):
     """Get the complement of a `sequence` of nucleotides.
@@ -176,7 +178,7 @@ def get_longest_peptide(rna_sequence, genetic_code):
         if next_three == 'AUG':
             polypeptide = translate_sequence(rna_sequence[i:], genetic_code)
             polypeptide_list.append(polypeptide)
-    return polypeptide_list
+    return ' '.join([str(elem) for elem in polypeptide_list])
 
     rna_list = list(rna_sequence)
     rna_list.reverse()
@@ -197,6 +199,7 @@ def get_longest_peptide(rna_sequence, genetic_code):
         if len(ele) > max_len:
            max_len = len(ele)
            longest_peptide = ele
+    return ''.join(longest_peptide)
 
     # printing result
     print("The longest_peptide is : " + longest_peptide)
