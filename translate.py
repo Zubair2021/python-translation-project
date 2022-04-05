@@ -227,6 +227,7 @@ def get_longest_peptide(rna_sequence, genetic_code):
     # printing result
     return("The longest_peptide is : " + longest_peptide)
 
+rna_sequence = ('ccugaaugacguacguaugacugcaguacguuacguacg')
 get_longest_peptide(rna_sequence, genetic_code)
 
 
@@ -249,7 +250,7 @@ if __name__ == '__main__':
             "AGU"
             "ACA"
             "GCG")
-    longest_peptide = get_longest_peptide(rna_sequence = rna_seq,
+    longest_peptide = get_longest_peptide(rna_sequence = rna_sequence,
             genetic_code = genetic_code)
     assert isinstance(longest_peptide, str), "Oops: the longest peptide is {0}, not a string".format(longest_peptide)
     message = "The longest peptide encoded by\n\t'{0}'\nis\n\t'{1}'\n".format(
