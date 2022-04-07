@@ -1,7 +1,6 @@
 #! /usr/bin/env python3
 
 import sys
-from collections import defaultdict
 from itertools import groupby
 
 def translate_sequence(rna_sequence, genetic_code):
@@ -201,30 +200,9 @@ def get_longest_peptide(rna_sequence, genetic_code):
     #print(rev_pp_str)
 
     Combined_str = pp_str + rev_pp_str
-    #print(Combined_str)
-    #Combined_list = [i + j for i, j in zip(polypeptide_list, rev_polypeptide_list)]
-    #print(Combined_list)
-    #def combine_pp_lists(polypeptide_list, rev_polypeptide_list):
-     #   return [sub[item] for item in range(len(rev_polypeptide_list))
-      #                    for sub in [polypeptide_list, rev_polypeptide_list]]
-    #comb_list = combine_pp_lists(polypeptide_list, rev_polypeptide_list)
-    #comb_list.split("\s")
-    # Longest String in list
-    # using loop
-    #max_len = -1
-    #for ele in comb_list:
-      #  if len(ele) > max_len:
-       #    max_len = len(ele)
-        #   longest_peptide = ele
-    #from collections import defaultdict
-    
-    #longest = ''.join(str(elem) for elem in max_str)
-    #longest = max_string(Combined_str)
-    #max_string(Combined_list)
-    #return ''.join(longest_peptide)
-    # printing result
-    #return longest_peptide
-    #words = polypeptide_list
+     
+        
+    # To get the longest peptide (see imported groupby tool under the shebang line)
     _, (*longest,) = next(groupby(sorted(Combined_str.split(","), key=len, reverse=True), len))
     return ' '.join([str(elem) for elem in longest])
 
@@ -232,8 +210,7 @@ rna_sequence = ('ccugaaugacguacguaugacugcaguacguuacguacg')
 get_longest_peptide(rna_sequence, genetic_code)
 
 
-z = get_longest_peptide(rna_sequence, genetic_code)
-print(z)
+get_longest_peptide(rna_sequence, genetic_code)
 
 
 
