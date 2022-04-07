@@ -190,6 +190,7 @@ def get_longest_peptide(rna_sequence, genetic_code):
         A string of the longest sequence of amino acids encoded by
         `rna_sequence`.
     """
+    #Get polypeptide for both rna_sequence and reverse (optional print statements)
     pp = get_all_translations(rna_sequence, genetic_code)
     pp_str = ','.join([str(elem) for elem in pp])
     #print(pp_str)
@@ -199,19 +200,15 @@ def get_longest_peptide(rna_sequence, genetic_code):
     rev_pp_str =  ','.join([str(elem) for elem in rev_pp])
     #print(rev_pp_str)
 
+
     Combined_str = pp_str + rev_pp_str
-     
-        
+
     # To get the longest peptide (see imported groupby tool under the shebang line)
     _, (*longest,) = next(groupby(sorted(Combined_str.split(","), key=len, reverse=True), len))
     return ' '.join([str(elem) for elem in longest])
 
 rna_sequence = ('ccugaaugacguacguaugacugcaguacguuacguacg')
 get_longest_peptide(rna_sequence, genetic_code)
-
-
-get_longest_peptide(rna_sequence, genetic_code)
-
 
 
 if __name__ == '__main__':
