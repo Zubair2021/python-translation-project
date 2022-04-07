@@ -1,7 +1,8 @@
 #! /usr/bin/env python3
 
 import sys
-
+from collections import defaultdict
+from itertools import groupby
 
 def translate_sequence(rna_sequence, genetic_code):
     """Translates a sequence of RNA into a sequence of amino acids.
@@ -190,45 +191,50 @@ def get_longest_peptide(rna_sequence, genetic_code):
         A string of the longest sequence of amino acids encoded by
         `rna_sequence`.
     """
-    rna_sequence = rna_sequence.upper()
-    num_bases = len(rna_sequence)
-    last_first_base_index = num_bases - 3
-    polypeptide_list = []
-    for i in range(last_first_base_index + 1):
-        i_end = i + 3
-        if i_end == '*':
-          break
-        else:
-          next_three = rna_sequence[i:i_end]
-          if next_three == 'AUG':
-            polypeptide = translate_sequence(rna_sequence[i:], genetic_code)
-            polypeptide_list.append(polypeptide)
-    return ' '.join([str(elem) for elem in polypeptide_list])
+    pp = get_all_translations(rna_sequence, genetic_code)
+    pp_str = ','.join([str(elem) for elem in pp])
+    #print(pp_str)
 
-    rna_list = list(rna_sequence.upper())
-    rna_rev = rna_list.reverse()
-    rev_c = []
-    complement = {'A' : 'U', 'C' : 'G', 'G': 'C', 'U': 'A'}
-    for i in rna_rev:
-        rev_c.append(complement[i])
-    return ''.join(rev_c)
+    rev_c_rna_seq = reverse_and_complement(rna_sequence)
+    rev_pp = get_all_translations(rev_c_rna_seq, genetic_code)
+    rev_pp_str =  ','.join([str(elem) for elem in rev_pp])
+    #print(rev_pp_str)
 
-    Combined_list = polypeptide_list + rev_c
-
+    Combined_str = pp_str + rev_pp_str
+    #print(Combined_str)
+    #Combined_list = [i + j for i, j in zip(polypeptide_list, rev_polypeptide_list)]
+    #print(Combined_list)
+    #def combine_pp_lists(polypeptide_list, rev_polypeptide_list):
+     #   return [sub[item] for item in range(len(rev_polypeptide_list))
+      #                    for sub in [polypeptide_list, rev_polypeptide_list]]
+    #comb_list = combine_pp_lists(polypeptide_list, rev_polypeptide_list)
+    #comb_list.split("\s")
     # Longest String in list
     # using loop
-    max_len = -1
-    for ele in Combined_list:
-        if len(ele) > max_len:
-           max_len = len(ele)
-           longest_peptide = ele
+    #max_len = -1
+    #for ele in comb_list:
+      #  if len(ele) > max_len:
+       #    max_len = len(ele)
+        #   longest_peptide = ele
+    #from collections import defaultdict
+    
+    #longest = ''.join(str(elem) for elem in max_str)
+    #longest = max_string(Combined_str)
+    #max_string(Combined_list)
     #return ''.join(longest_peptide)
-
     # printing result
-    return("The longest_peptide is : " + longest_peptide)
+    #return longest_peptide
+    #words = polypeptide_list
+    _, (*longest,) = next(groupby(sorted(Combined_str.split(","), key=len, reverse=True), len))
+    return ' '.join([str(elem) for elem in longest])
 
 rna_sequence = ('ccugaaugacguacguaugacugcaguacguuacguacg')
 get_longest_peptide(rna_sequence, genetic_code)
+
+
+z = get_longest_peptide(rna_sequence, genetic_code)
+print(z)
+
 
 
 if __name__ == '__main__':
@@ -259,4 +265,5 @@ if __name__ == '__main__':
     sys.stdout.write(message)
     if longest_peptide == "MYWHATAPYTHQNISTA":
         sys.stdout.write("Indeed.\n")
+
 
